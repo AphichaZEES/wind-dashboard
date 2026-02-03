@@ -75,7 +75,13 @@ export default function Dashboard3D() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://unprivate-peyton-nonministerially.ngrok-free.dev/api/wind-data', {
+        // Smart URL detection: use local API for localhost, ngrok for production
+        const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+        const apiUrl = isLocalhost
+          ? '/api/wind-data'
+          : 'https://unprivate-peyton-nonministerially.ngrok-free.dev/api/wind-data';
+
+        const response = await fetch(apiUrl, {
           headers: {
             'ngrok-skip-browser-warning': '69420'
           }
