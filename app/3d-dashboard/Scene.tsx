@@ -77,7 +77,7 @@ export default function Scene({ turbines, onTurbineClick, hideLabels = false }: 
 
   return (
     <div className="w-full h-screen">
-      <Canvas fog={{ color: '#c8dae8', near: 150, far: 500 }}>
+      <Canvas>
         {/* Camera positioned at diagonal angle for beautiful overview */}
         <PerspectiveCamera makeDefault position={[-35, 28, 55]} />
         <OrbitControls
