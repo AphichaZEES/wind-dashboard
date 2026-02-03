@@ -75,7 +75,11 @@ export default function Dashboard3D() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://unprivate-peyton-nonministerially.ngrok-free.dev/api/wind-data');
+        const response = await fetch('https://unprivate-peyton-nonministerially.ngrok-free.dev/api/wind-data', {
+          headers: {
+            'ngrok-skip-browser-warning': '69420'
+          }
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch wind data');
         }

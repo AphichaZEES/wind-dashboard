@@ -11,6 +11,17 @@ interface TurbineData {
   timestamp: string;
 }
 
+// CORS headers for ngrok and Vercel access
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, ngrok-skip-browser-warning',
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function GET() {
   try {
     // Path to the CSV results directory
@@ -26,7 +37,7 @@ export async function GET() {
       .reverse(); // Get the latest file first
 
     if (csvFiles.length === 0) {
-      return NextResponse.json({ error: 'No CSV files found' }, { status: 404 });
+      return NextResponse.json({ error: 'No CSV files found' }, { status: 404, headers: corsHeaders });
     }
 
     // Read the latest CSV file
@@ -75,13 +86,13 @@ export async function GET() {
       file: latestFile,
       turbineCount: turbines.length,
       turbines
-    });
+    }, { headers: corsHeaders });
 
   } catch (error) {
     console.error('Error reading wind data:', error);
     return NextResponse.json(
       { error: 'Failed to read wind data', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
